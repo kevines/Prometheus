@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+	    <property name="maxTotal" value="#{T(com.cnwisdom.utils.ConfigUtil).getProperty('redis.maxTotal')}" />
+		<property name="maxIdle" value="#{T(com.cnwisdom.utils.ConfigUtil).getProperty('redis.maxIdle')}" />
+		<property name="minIdle" value="#{T(com.cnwisdom.utils.ConfigUtil).getProperty('redis.minIdle')}" />
+		<property name="maxWaitMillis" value="#{T(com.cnwisdom.utils.ConfigUtil).getProperty('redis.maxWaitMillis')}" />
+	</bean>
+
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+		<constructor-arg index="0" ref="jedisPoolConfig" />
+		<constructor-arg index="1"
+			value="#{T(com.cnwisdom.utils.ConfigUtil).getProperty('redis.host')}" />
+	</bean>
+
+	<bean id="jedisSupport" class="com.cnwisdom.cache.JedisSupport" />
+</beans>

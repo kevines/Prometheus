@@ -1,0 +1,161 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    options.encoding = 'utf-8'
+}
+
+war {
+    baseName = "Prometheus"
+    manifest {
+        attributes("Implementation-Title": "Prometheus")
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Prometheus',
+                   'Implementation-Version': 1.0
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven{ url 'http://10.255.0.180:18080/nexus/content/repositories/cnwisdom/'}
+}
+
+ext {
+    springVersion='4.3.9.RELEASE'
+    GsonVersion = '2.7'
+    swaggerVersion ="2.7.0"
+    log4jVersion = '1.2.17'
+    jerseyVersion = '2.25.1'
+    slf4jVersion = '1.7.12'
+    mybatisVersion = '3.4.2'
+    c3poVersion = '0.9.5.1'
+    guavaVersion = '21.0'
+    jacksonVersion = '2.8.8'
+    jedisVersion = '2.9.0'
+    jettyVersion = '9.2.10.v20150310'
+}
+
+
+dependencies {
+    compile(group: 'com.alibaba', name: 'dubbo', version: '2.5.3') {
+        exclude group: 'org.springframework', module: 'spring'
+    }
+    
+    compile(group: 'io.swagger', name: 'swagger-jersey2-jaxrs', version: '1.5.0') {
+        exclude module: 'jackson-datatype-joda'
+    }
+    
+	compile (
+	        //Zookeeper调用
+	        [group: 'com.github.sgroschupf', name: 'zkclient', version: '0.1'],
+	        
+            [group: 'log4j', name: 'log4j', version: log4jVersion],
+			[group: 'junit', name: 'junit', version: '4.+'],
+			
+			[group: 'org.slf4j', name: 'slf4j-log4j12', version: slf4jVersion],
+			
+			
+			
+            [group: 'commons-configuration', name: 'commons-configuration', version: '1.10'],
+            [group: 'com.google.guava', name: 'guava', version: guavaVersion],
+            [group: 'commons-collections', name: 'commons-collections', version:'3.2.1'],
+            [group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'],
+            [group: 'org.hibernate', name: 'hibernate-validator', version:'5.2.5.Final'],
+
+
+			//jettty
+			[group: 'org.eclipse.jetty', name: 'jetty-server', version: jettyVersion],
+            [group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jettyVersion],
+            [group: 'org.eclipse.jetty', name: 'jetty-webapp', version: jettyVersion],
+            [group: 'org.eclipse.jetty', name: 'jetty-servlets', version: jettyVersion],
+
+			//Spring核心依赖
+			[group: 'org.springframework', name: 'spring-core', version: springVersion],
+			[group: 'org.springframework', name: 'spring-beans', version: springVersion],
+			[group: 'org.springframework', name: 'spring-context', version: springVersion],
+			
+			//Spring DAO层
+			[group: 'org.springframework', name: 'spring-jdbc', version: springVersion],
+			[group: 'org.springframework', name: 'spring-tx', version: springVersion],
+			
+			//spring web
+			[group: 'org.springframework', name: 'spring-web', version: springVersion],
+			[group: 'org.springframework', name: 'spring-webmvc', version: springVersion],
+			
+            //mybatis
+            [group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.0'],
+            [group: 'org.mybatis', name: 'mybatis', version: '3.4.1'],
+            
+            //jdbc
+            [group: 'mysql', name: 'mysql-connector-java', version: "5.1.35"],
+            
+            //C3p0连接池
+            [group: 'com.mchange', name: 'c3p0', version: c3poVersion],
+            
+            [group: 'com.google.code.gson', name: 'gson', version: GsonVersion],
+            
+           //swagger UI
+            [group: 'io.springfox', name: 'springfox-swagger2', version: swaggerVersion],
+            [group: 'io.springfox', name: 'springfox-swagger-ui', version: swaggerVersion],
+            [group: 'io.springfox', name: 'springfox-staticdocs', version: '2.6.1'],
+            
+            //jackson用于将springfox返回的文档对象转化成json字符串
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion],
+            
+            [group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'],
+            
+            //登陆权限校验
+            [group: 'com.cnwisdom', name: 'rock', version: '0.4'],
+            
+            //jersey
+            [group: 'org.glassfish.jersey.core', name: 'jersey-server', version: jerseyVersion],
+            [group: 'org.glassfish.jersey.core', name: 'jersey-common', version: jerseyVersion],
+            [group: 'org.glassfish.jersey.core', name: 'jersey-common', version: jerseyVersion],
+            [group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion],
+            [group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: jerseyVersion],
+            [group: 'org.glassfish.jersey.ext', name: 'jersey-bean-validation', version: jerseyVersion],
+            [group: 'org.glassfish.jersey.ext', name: 'jersey-entity-filtering', version: jerseyVersion],
+            
+            
+            
+            //redis
+            [group: 'redis.clients', name: 'jedis', version: jedisVersion],
+			[group: 'org.springframework.data', name: 'spring-data-redis', version: '1.8.4.RELEASE'],
+			
+			//文件上传
+			[group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.3']
+    )
+}
+
+
+
+ext {
+    environment = System.getProperty("env")
+
+    if (environment == null) {
+    	environment = "dev"
+    }
+}
+//gradle clean war -Denv=dev
+
+test {
+    systemProperties 'property': 'value'
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/resources"]
+        }
+    }
+}
+

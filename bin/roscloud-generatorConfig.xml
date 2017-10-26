@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<classPathEntry
+		location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.25/mysql-connector-java-5.1.25.jar" />
+	<context id="context1">
+		<jdbcConnection connectionURL="jdbc:mysql://192.168.4.170:3306/db_cloud_ros"
+			driverClass="com.mysql.jdbc.Driver" password="super_xq" userId="admin_xq" />
+		<javaModelGenerator targetPackage="com.cnwisdom.Prometheus.dao.cloudros.entity"
+			targetProject="Prometheus/src/main/java" />
+		<sqlMapGenerator targetPackage="com.cnwisdom.Prometheus.dao.cloudros.mapper"
+			targetProject="Prometheus/src/main/resources" />
+		<javaClientGenerator targetPackage="com.cnwisdom.Prometheus.dao.cloudros.mapper"
+			targetProject="Prometheus/src/main/java" type="XMLMAPPER" />
+			
+		<table schema="db_cloud_ros" tableName="t_warn_config"></table>
+	</context>
+</generatorConfiguration>
